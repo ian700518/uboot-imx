@@ -972,6 +972,7 @@ static struct pmic *pfuze;
 int power_init_board(void)
 {
 	unsigned int reg, ret;
+	return 0;
 
 	pfuze = pfuze_common_init(I2C_PMIC);
 	if (!pfuze)
