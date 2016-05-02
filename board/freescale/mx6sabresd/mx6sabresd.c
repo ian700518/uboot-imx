@@ -88,6 +88,8 @@ DECLARE_GLOBAL_DATA_PTR;
 #define EPDC_PAD_CTRL    (PAD_CTL_PKE | PAD_CTL_SPEED_MED |	\
 	PAD_CTL_DSE_40ohm | PAD_CTL_HYS)
 
+#define PERI_EN		IMX_GPIO_NR(2, 9)
+
 int dram_init(void)
 {
 	gd->ram_size = imx_ddr_size();
@@ -127,6 +129,20 @@ static void setup_iomux_enet(void)
 	gpio_direction_output(IMX_GPIO_NR(1, 25) , 0);
 	udelay(500);
 	gpio_set_value(IMX_GPIO_NR(1, 25), 1);
+}
+
+static iomux_v3_cfg_t const i2c_pads[] = {
+	MX6_PAD_SD4_DAT1__GPIO2_IO09		| MUX_PAD_CTRL(NO_PAD_CTRL),
+};
+
+static void setup_iomux_i2c(void)
+{
+	imx_iomux_v3_setup_multiple_pads(i2c_pads, ARRAY_SIZE(i2c_pads));
+
+	/* set PERI_EN to low */
+	gpio_direction_output(PERI_EN , 1);
+	udelay(5000);
+	gpio_set_value(PERI_EN, 0);
 }
 
 static iomux_v3_cfg_t const usdhc2_pads[] = {
@@ -951,6 +967,7 @@ int board_init(void)
 #ifdef CONFIG_MXC_SPI
 	setup_spi();
 #endif
+	setup_iomux_i2c();
 	setup_i2c(1, CONFIG_SYS_I2C_SPEED, 0x7f, &i2c_pad_info1);
 
 #ifdef CONFIG_USB_EHCI_MX6
