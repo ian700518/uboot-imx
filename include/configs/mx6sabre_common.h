@@ -261,6 +261,14 @@
 			"bootz; " \
 		"fi;\0"
 
+#define CONFIG_BOOTARGS \
+	"console=ttymxc0,115200 init=/init " \
+	"video=mxcfb0:dev=lcd,Himax-SVGA,if=RGB24,bpp=32 " \
+	"video=mxcfb1:dev=lcd,Himax-SVGA,if=RGB24,bpp=32 " \
+	"video=mxcfb2:off video=mxcfb3:off " \
+	"vmalloc=256M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=448M " \
+	"androidboot.selinux=disabled androidboot.dm_verity=disabled"
+
 #define CONFIG_BOOTCOMMAND \
 	"mmc dev ${mmcdev};" \
 	"if mmc rescan; then " \

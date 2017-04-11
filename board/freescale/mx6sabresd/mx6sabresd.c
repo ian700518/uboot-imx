@@ -89,6 +89,9 @@ DECLARE_GLOBAL_DATA_PTR;
 	PAD_CTL_DSE_40ohm | PAD_CTL_HYS)
 
 #define PERI_EN		IMX_GPIO_NR(2, 9)
+#define LCD_PWR		IMX_GPIO_NR(3, 23)
+#define LCD1_RST	IMX_GPIO_NR(3, 24)
+#define LCD2_RST	IMX_GPIO_NR(4, 20)
 
 int dram_init(void)
 {
@@ -981,7 +984,6 @@ int board_init(void)
 #ifdef CONFIG_CMD_SATA
 	setup_sata();
 #endif
-
 	return 0;
 }
 
